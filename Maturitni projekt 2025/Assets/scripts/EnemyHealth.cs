@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private float maxHealth;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject[] components;
 
 
     //private HealthBar healthBar;
@@ -25,8 +27,12 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            animator.SetBool("IsDead", true);
-            Destroy(gameObject);
+            animator.SetTrigger("IsDead");
+            gameObject.GetComponent<EnemyMovement>().enabled = false; //pri smrti se vypnou vsechny ostatni komponenty na enemy
+            gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            gameObject.GetComponent<EnemyHealth>().enabled = false;
+
         }
     }
 }

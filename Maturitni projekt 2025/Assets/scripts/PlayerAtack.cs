@@ -18,7 +18,7 @@ public class PlayerAtack : MonoBehaviour
 
     void Start()
     {
-        weapon = GetComponent<PlayerWeapon>();  //if player has no weapon it will give an error !!
+        weapon = GetComponent<PlayerWeapon>();  //player musi mit weapon, jinak error !!
 
         zoneCircle.transform.parent.gameObject.SetActive(true);
         zoneCircle.fillAmount = weapon.angle * 2f / 360f;
@@ -30,13 +30,13 @@ public class PlayerAtack : MonoBehaviour
     {
         Vector3 attackDir = new Vector3(attackJoystick.Horizontal, 0, attackJoystick.Vertical).normalized;   //Joystick input
 
-        if (attackDir != Vector3.zero)      //just touched joystick
+        if (attackDir != Vector3.zero)      //kdyz se dotkne js
         {
             charged = true;
             tempAttackDir = attackDir;
             DrawZoneCone(true);
         }
-        if (charged && attackDir == Vector3.zero)           //just released joystick
+        if (charged && attackDir == Vector3.zero)           //kdyz pusti js
         {
             DrawZoneCone(false);
             Attack(tempAttackDir);
@@ -47,18 +47,19 @@ public class PlayerAtack : MonoBehaviour
     private void Attack(Vector3 attackDir)
     {
         if (Time.time <= nextTimeToAtack) { return; }
-
         nextTimeToAtack = Time.time + weapon.duration;
-
         List<Transform> toHitTransforms = new List<Transform>();
         Collider[] enemies = Physics.OverlapSphere(transform.position, weapon.range, enemyMask);
+
         foreach (Collider e in enemies)
         {
+
             if (Vector3.Angle(attackDir, e.transform.position - transform.position) <= weapon.angle)
             {
                 toHitTransforms.Add(e.transform);
             }
         }
+
         foreach (Transform t in toHitTransforms)
         {
             t.GetComponent<EnemyHealth>().TakeDamage(weapon.damage);
@@ -81,9 +82,9 @@ public class PlayerAtack : MonoBehaviour
     }
 
     //naktersli atackrange
-    //private void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(transform.position, weapon.range);
-    //}
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, weapon.range);
+    }
 }

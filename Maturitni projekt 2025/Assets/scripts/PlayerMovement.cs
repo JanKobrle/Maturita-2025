@@ -7,18 +7,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] float rotateSpeed;
     [SerializeField] float playerSize;
+    [SerializeField] private Joystick movementJoystick;
+
 
     void Update()
     {
-        Vector3 moveDir = new Vector3();
+        Vector3 moveDir = new Vector3(movementJoystick.Horizontal, 0, movementJoystick.Vertical);   //Joystick input
 
-        bool pica = Input.GetKey(KeyCode.Space);
-
-        if (Input.GetKey(KeyCode.W)) { moveDir.z = 1f; }
-        if (Input.GetKey(KeyCode.S)) { moveDir.z = -1f; }
-        if (Input.GetKey(KeyCode.A)) { moveDir.x = -1f; }
-        if (Input.GetKey(KeyCode.D)) { moveDir.x = 1f; }
-        moveDir.Normalize();
+        if (moveDir.x == 0 && moveDir.z == 0)      //for testing on keyborad (only if joystick input = null)
+        {
+            if (Input.GetKey(KeyCode.W)) { moveDir.z = 1f; }
+            if (Input.GetKey(KeyCode.S)) { moveDir.z = -1f; }
+            if (Input.GetKey(KeyCode.A)) { moveDir.x = -1f; }
+            if (Input.GetKey(KeyCode.D)) { moveDir.x = 1f; }
+            moveDir.Normalize();                  //for diagonal movement to remain equal to 1
+        }
 
         //Vytvoreni neviditelneho boxu pro kontrolu kolize (box ma velikost projistotu o kousek vetsi, nez hrac)
         float moveDistance = movementSpeed * Time.deltaTime;
@@ -54,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed); //hrac se pohybuje a otaci do smeru chuze.......
 
         float moveDirAbsoluteValue = Mathf.Abs(moveDir.x) + Mathf.Abs(moveDir.y) + Mathf.Abs(moveDir.z);
-        if (moveDirAbsoluteValue != 0)                                                    //kdyz absolutni hodnota vektoru nenolova hraje animace
+        if (moveDirAbsoluteValue != 0)               //kdyz absolutni hodnota vektoru nenolova hraje animace
         {
             animator.SetBool("IsMoving", true);
         }

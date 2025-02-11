@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using UnityEngine.Animations;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private float attackRange;
     [SerializeField] private float playerSpotRange;
+
+    [SerializeField] private Animator animator;
 
 
     private NavMeshAgent agent;
@@ -20,6 +20,8 @@ public class EnemyMovement : MonoBehaviour
         agent = gameObject.GetComponent<NavMeshAgent>();
         //enemyAttack = gameObject.GetComponent<EnemyAttack>();
         canMove = true;
+
+        //animator = gameObject.GetComponent<Animation>();
     }
 
     void Update()
@@ -43,19 +45,27 @@ public class EnemyMovement : MonoBehaviour
         {
             agent.destination = transform.position;
             //enemyAttack.StartAttack(playerTransform);
+            animator.SetBool("IsRunning", false); 
 
         }
         else if (Vector3.Distance(transform.position, playerTransform.position) <= playerSpotRange)
         {
             //enemyAttack.CancelRotate();
             agent.destination = playerTransform.position;
+            animator.SetBool("IsRunning", true);
         }
         else
         {
             agent.destination = transform.position;
+            animator.SetBool("IsRunning", false);
         }
 
+            
     }
+
+
+    
+        
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
