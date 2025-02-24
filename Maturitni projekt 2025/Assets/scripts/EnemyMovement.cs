@@ -10,7 +10,7 @@ public class EnemyMovement : MonoBehaviour
 
 
     private NavMeshAgent agent;
-    //private EnemyAttack enemyAttack;
+    private EnemyAttack enemyAttack;
     private Transform playerTransform;
     private bool canMove;
 
@@ -18,10 +18,8 @@ public class EnemyMovement : MonoBehaviour
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         agent = gameObject.GetComponent<NavMeshAgent>();
-        //enemyAttack = gameObject.GetComponent<EnemyAttack>();
+        enemyAttack = gameObject.GetComponent<EnemyAttack>();
         canMove = true;
-
-        //animator = gameObject.GetComponent<Animation>();
     }
 
     void Update()
@@ -44,13 +42,13 @@ public class EnemyMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, playerTransform.position) <= attackRange)
         {
             agent.destination = transform.position;
-            //enemyAttack.StartAttack(playerTransform);
+            enemyAttack.StartAttack(playerTransform);
             animator.SetBool("IsRunning", false); 
 
         }
         else if (Vector3.Distance(transform.position, playerTransform.position) <= playerSpotRange)
         {
-            //enemyAttack.CancelRotate();
+            enemyAttack.CancelRotate();
             agent.destination = playerTransform.position;
             animator.SetBool("IsRunning", true);
         }
@@ -62,9 +60,6 @@ public class EnemyMovement : MonoBehaviour
 
             
     }
-
-
-    
         
     private void OnDrawGizmosSelected()
     {
@@ -77,41 +72,3 @@ public class EnemyMovement : MonoBehaviour
 
 }
 
-
-
-//[SerializeField] private float attackRange;
-//[SerializeField] private float playerSpotRange;
-
-//private NavMeshAgent agent;
-//private Transform playerTransform;
-//public Transform player;
-//private bool playerInSpotRange;
-//private bool playerInAttackRange;
-
-
-//void Start()
-//{
-//    player = GameObject.FindGameObjectWithTag("Player").transform;
-//    agent = GetComponent<NavMeshAgent>();
-
-//}
-
-//void Update()
-//{
-//    playerInSpotRange = Physics.CheckSphere(transform.position, playerSpotRange);
-//    playerInAttackRange = Physics.CheckSphere(transform.position, attackRange);
-
-//    if (playerInSpotRange && !playerInAttackRange) { ChasePlayer(); }
-//    //if (playerInSpotRange && playerInAttackRange) { AttackPlayer(); }
-//}
-
-//private void ChasePlayer()
-//{
-
-//}
-
-////private void AttackPlayer()
-////{
-////    agent.SetDestination(transform.position);
-////    transform.LookAt(player);
-////}

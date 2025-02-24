@@ -111,14 +111,14 @@ AnimatorController:
   m_Name: Skeleton@Idle
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: IsDead
+  - m_Name: IsRunning
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: IsRunning
-    m_Type: 4
+  - m_Name: IsDead
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -150,32 +150,32 @@ AnimatorStateMachine:
     m_Position: {x: 210, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6980139920437040274}
-    m_Position: {x: 620, y: -100, z: 0}
+    m_Position: {x: 570, y: -80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4733873384890848969}
-    m_Position: {x: 630, y: -20, z: 0}
+    m_Position: {x: 570, y: -10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5863059922212341374}
     m_Position: {x: 240, y: -10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5537349748216296803}
-    m_Position: {x: 590, y: 50, z: 0}
+    m_Position: {x: 570, y: 70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4845931318066064625}
     m_Position: {x: 570, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3952177770565372605}
-    m_Position: {x: 60, y: -150, z: 0}
+    m_Position: {x: 570, y: 140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3630918725666242751}
-    m_Position: {x: 100, y: 210, z: 0}
+    m_Position: {x: 210, y: 160, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 1110607110982153562}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 10, y: -10, z: 0}
+  m_AnyStatePosition: {x: 0, y: -10, z: 0}
   m_EntryPosition: {x: -10, y: 80, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -200,8 +200,8 @@ AnimatorStateTransition:
   m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
