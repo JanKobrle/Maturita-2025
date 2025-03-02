@@ -71,7 +71,7 @@ public class EnemyAttack : MonoBehaviour
     }
     private IEnumerator AttackHit(Transform target)
     {
-        Debug.Log(" 7  IEnumerator AttackHit spusteno");
+        //Debug.Log(" 7  IEnumerator AttackHit spusteno");
         canAttack = false;
         GetComponent<EnemyMovement>().DisableMovement();
         DrawZoneCone(true);
@@ -79,9 +79,9 @@ public class EnemyAttack : MonoBehaviour
         yield return new WaitForSeconds(hitLoadTime); //tak aby sedelo s animaci
         if (Vector3.Angle(target.position - transform.position, transform.forward) <= hitAngle && Vector3.Distance(transform.position, target.position) <= hitRange)
         {
-            Debug.Log(" 8  Vector3.Angle( SPUSTENO");
+            //Debug.Log(" 8  Vector3.Angle( SPUSTENO");
             target.GetComponent<PlayerHealth>().TakeDamage(damage);
-            Debug.Log("8.1 " + target.name);
+            //Debug.Log("8.1 " + target.name);
 
         }
         DrawZoneCone(false);
@@ -94,7 +94,7 @@ public class EnemyAttack : MonoBehaviour
 
         if (set)
         {
-            Debug.Log(" 10  set");
+            //Debug.Log(" 10  set");
 
             zoneCircle.transform.parent.gameObject.SetActive(true);
             zoneCircle.rectTransform.Rotate(0, 0, hitAngle);

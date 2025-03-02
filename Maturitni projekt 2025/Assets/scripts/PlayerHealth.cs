@@ -30,7 +30,6 @@ public class PlayerHealth : MonoBehaviour
             //animace
             //vypnout
         }
-
-
+        //dodelat isdead vraci bool funkce
     }
 }
