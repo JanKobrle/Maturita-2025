@@ -12,6 +12,6 @@ public class MenuManager : MonoBehaviour
 
     public void Quit()
     {
-        Application.Quit();
+        Application.Quit(); //ted nefacha, ale as se exportuje, tak by melo
     }
 }

@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void GoToMenu()
+    public void GoToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
     }
