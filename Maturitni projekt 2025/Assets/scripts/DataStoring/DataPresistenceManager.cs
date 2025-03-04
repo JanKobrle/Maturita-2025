@@ -24,6 +24,7 @@ public class DataPresistenceManager : MonoBehaviour
     private void Start()
     {
         dataHandeler = new FileDataHandeler(Application.persistentDataPath, fileName);
+        //Debug.Log("presistentDataPath>"+Application.persistentDataPath);
         //Debug.Log("aspon start funguje");
         dataPresistanceObjects = FindAlldataPresistancesObjects();
         LoadGame();
@@ -57,15 +58,14 @@ public class DataPresistenceManager : MonoBehaviour
             dataPresistanceObj.SaveData(ref gameData);
         }
         Debug.Log($"saved shards: {gameData.shardCount}");
-        Debug.Log($"saved shards: {gameData.deathCount}");
+        Debug.Log($"saved deaths: {gameData.deathCount}");
 
         dataHandeler.Save(gameData); //ulozi data do souboru pomoci datahandleru
-
     }
 
     private void OnApplicationQuit()
     {
-        SaveGame(); //nefunguje, ale melo by po exportu
+        SaveGame(); //zatim nefunguje, ale melo by po exportu
     }
     private List<IDataPersistence> FindAlldataPresistancesObjects()
     {
