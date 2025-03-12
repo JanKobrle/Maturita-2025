@@ -15,8 +15,9 @@ public class DataPresistenceManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
+        if (instance != null && instance != this)
         {
+            Destroy(gameObject);
             Debug.LogError("found more than one DataManager in the scene");
         }
     }
@@ -37,7 +38,6 @@ public class DataPresistenceManager : MonoBehaviour
     }
     public void LoadGame()
     {
-
         gameData = dataHandeler.Load();//nacte jakykoliv data ze souboru pomoci data handleru
         if (gameData == null) //kdyz nejsou data loudne to novou hru
         {
@@ -52,14 +52,11 @@ public class DataPresistenceManager : MonoBehaviour
     }
     public void SaveGame()
     {
-        Debug.Log($"Found {dataPresistanceObjects.Count} persistence objects.");
-        foreach (IDataPersistence dataPresistanceObj in dataPresistanceObjects)
+        Debug.Log($"Game saved - Found {dataPresistanceObjects.Count} persistence objects.");
+        foreach (IDataPersistence dataPresistanceObj in dataPresistanceObjects) //najde data a hodi do promeny
         {
             dataPresistanceObj.SaveData(ref gameData);
         }
-        Debug.Log($"saved shards: {gameData.shardCount}");
-        Debug.Log($"saved deaths: {gameData.deathCount}");
-
         dataHandeler.Save(gameData); //ulozi data do souboru pomoci datahandleru
     }
 
@@ -70,17 +67,16 @@ public class DataPresistenceManager : MonoBehaviour
     private List<IDataPersistence> FindAlldataPresistancesObjects()
     {
         //Debug.Log("4 idata presistance");
-
         IEnumerable<IDataPersistence> dataPresistanceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
         return new List<IDataPersistence>(dataPresistanceObjects);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SaveGame();
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Escape))
+    //    {
+    //        SaveGame();
+    //    }
+    //}
 
 }

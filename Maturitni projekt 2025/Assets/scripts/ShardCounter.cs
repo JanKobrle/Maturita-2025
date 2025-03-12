@@ -6,6 +6,18 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class ShardCounter : MonoBehaviour, IDataPersistence
 {
+    public static ShardCounter instance { get; private set; }
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            Debug.LogError("found more than one ShardCounter in the scene");
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
     public int shardCount;
     [SerializeField] private TextMeshProUGUI shardCounter;
     void Update()
@@ -20,4 +32,5 @@ public class ShardCounter : MonoBehaviour, IDataPersistence
     {
         data.shardCount = shardCount;
     }
-}
+  
+}           
