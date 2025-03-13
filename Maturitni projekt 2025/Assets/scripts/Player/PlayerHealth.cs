@@ -43,7 +43,8 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
             //vypnout
             ShardCounter.instance.shardCount = 0;
             deathCount++;
-            DataPersistenceManager.instance.SaveGame();
+            DataPersistenceManager DPManager = FindObjectOfType<DataPersistenceManager>();
+            DPManager.SaveGame();
         }
         //dodelat isdead vraci bool funkce
     }
