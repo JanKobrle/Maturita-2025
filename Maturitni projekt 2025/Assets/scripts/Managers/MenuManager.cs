@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour 
 {
     public static MenuManager instance { get; private set; }
+    //[SerializeField] DataPersistenceManager DPManager;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -21,7 +22,11 @@ public class MenuManager : MonoBehaviour
     public void Play()
     {
         SceneManager.LoadSceneAsync(1);
-        DataPresistenceManager.instance.SaveGame();
+        Debug.Log(DataPersistenceManager.instance);
+        //DataPersistenceManager.instance.SaveGame();
+        //Debug.Log(DPManager);
+        DataPersistenceManager DPManager = FindObjectOfType<DataPersistenceManager>();
+        DPManager.SaveGame();
     }
 
     public void Quit()

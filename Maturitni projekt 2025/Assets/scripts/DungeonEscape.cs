@@ -10,7 +10,8 @@ public class DungeonEscape : MonoBehaviour
         if (collision.collider.gameObject.CompareTag("Player"))
         {
             SceneManager.LoadScene("MainMenu");
-            DataPresistenceManager.instance.SaveGame();
+            DataPersistenceManager DPManager = FindObjectOfType<DataPersistenceManager>();
+            DPManager.SaveGame();
         }
     }
 }

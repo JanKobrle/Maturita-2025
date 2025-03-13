@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Collections;
 
 
-public class DataPresistenceManager : MonoBehaviour
+public class DataPersistenceManager : MonoBehaviour
 {
     [SerializeField] private string fileName;
     private GameData gameData;
-    public static DataPresistenceManager instance { get; private set; }
+    public static DataPersistenceManager instance { get; private set; }
     private List<IDataPersistence> dataPresistanceObjects;
 
     private FileDataHandeler dataHandeler;
@@ -20,6 +20,7 @@ public class DataPresistenceManager : MonoBehaviour
             Destroy(gameObject);
             Debug.LogError("found more than one DataManager in the scene");
         }
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
