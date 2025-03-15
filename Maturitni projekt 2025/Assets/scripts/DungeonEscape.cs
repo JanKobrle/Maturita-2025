@@ -9,9 +9,9 @@ public class DungeonEscape : MonoBehaviour
     {
         if (collision.collider.gameObject.CompareTag("Player"))
         {
+
+            PlayerPrefs.SetInt("ShardAmmount", PlayerPrefs.GetInt("ShardAmmount") + GameManager.instance.shardAmmount);
             SceneManager.LoadScene("MainMenu");
-            DataPersistenceManager DPManager = FindObjectOfType<DataPersistenceManager>();
-            DPManager.SaveGame();
         }
     }
 }

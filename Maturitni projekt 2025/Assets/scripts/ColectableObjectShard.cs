@@ -9,9 +9,8 @@ public class ColectableObjectShard : MonoBehaviour
         //Debug.Log("still nothing");
         if (collision.collider.gameObject.CompareTag("Player"))
         {
-          collision.collider.gameObject.GetComponent<ShardCounter>().shardCount++;
-          //Debug.Log("item colected");
-          Destroy(gameObject);
+           GameManager.instance.AddShardsAndSave(1);
+           Destroy(gameObject);
         }
     }
 }

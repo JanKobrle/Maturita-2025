@@ -1,29 +1,31 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance { get; private set; }
-    void Awake()
-    {
-        if (instance != null && instance != this) { Destroy(gameObject); }
-        else { instance = this; }
-    }
-    void Start()
-    {
+    public static GameManager instance { get; private set; }   //singleton
 
-    }
+    public int shardAmmount = 0;
 
-    void Update()
+    private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Debug.Log("found more than one GameManager in the scene");
+            Destroy(gameObject);
+        }
+        else
+        {
+          instance = this;
+        }
 
-    }
-
-    public void GoToMainMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
     }
 
+    public void AddShardsAndSave(int ammount)
+    {
+        shardAmmount += ammount;
+    }
 
 
 }

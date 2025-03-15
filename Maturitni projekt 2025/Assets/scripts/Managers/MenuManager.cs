@@ -1,32 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuManager : MonoBehaviour 
+public class MenuManager : MonoBehaviour
 {
     public static MenuManager instance { get; private set; }
+
     //[SerializeField] DataPersistenceManager DPManager;
+    private int shards;
+
+    private int damageLevel;
+    private int healthLevel;
+    //DODELAT pripadne attak speed
+
+    [SerializeField] private TextMeshProUGUI shardsText;
+
+    [SerializeField] private TextMeshProUGUI damageLevelText;
+    [SerializeField] private TextMeshProUGUI healthLevelText;
+
     private void Awake()
     {
         if (instance != null && instance != this)
         {
             Destroy(gameObject); // znici impostory
-            return;
         }
-        instance = this;
-        DontDestroyOnLoad(gameObject); // neznici se to pri prechodu
+        else
+        {
+            instance = this;
+        }
+
 
     }
+
+    private void Start()
+    {
+        shards = PlayerPrefs.GetInt("ShardAmmount");
+
+        damageLevel = PlayerPrefs.GetInt("DamageLevel");
+        healthLevel = PlayerPrefs.GetInt("HealthLevel");
+
+        shardsText.text = "Your shards: " + shards.ToString();
+
+        damageLevelText.text = PlayerPrefs.GetInt("DamageLevel").ToString();
+        healthLevelText.text = PlayerPrefs.GetInt("HealthLevel").ToString();
+
+    }
+
+    public void SpendShards(int amount)
+    {
+        shards -= amount;
+        shardsText.text = "Your shards: " + shards.ToString();
+        PlayerPrefs.SetInt("ShardAmmount", shards);
+    }
+
     public void Play()
     {
         SceneManager.LoadSceneAsync(1);
-        Debug.Log(DataPersistenceManager.instance);
-        //DataPersistenceManager.instance.SaveGame();
-        //Debug.Log(DPManager);
-        DataPersistenceManager DPManager = FindObjectOfType<DataPersistenceManager>();
-        DPManager.SaveGame();
     }
 
     public void Quit()
@@ -36,54 +65,36 @@ public class MenuManager : MonoBehaviour
 
     public void EnhanceWeaponDamage()
     {
+        if (shards >= 5)
+        {
+            SpendShards(5);
+            damageLevel++;
+            PlayerPrefs.SetInt("DamageLevel", damageLevel);
 
-    }//DODELAT
-    public void EnhanceWeaponAttackSpeed()
-    {
-
-    }//DODELAT
+            var temp = PlayerPrefs.GetInt("Damage");
+            temp++; //muze mit slozitejsi vypocet eventuelne
+            PlayerPrefs.SetInt("Damage", temp);
+            damageLevelText.text = temp.ToString();
+        }
+    }
     public void EnhanceHealth()
     {
-        //PlayerHealth.instance.EnhancePlayerMaxHealthBy(1);
-        //healthIncrement++;
-        PlayerHealth playerHealth = FindObjectOfType<PlayerHealth>();
-        playerHealth.EnhancePlayerMaxHealthBy(1);
+        if (shards >= 5)
+        {
+            SpendShards(5);
+            healthLevel++;
+            PlayerPrefs.SetInt("HealthLevel", healthLevel);
+
+            var temp = PlayerPrefs.GetInt("MaxHealth");
+            temp++; //just adds one hp
+            PlayerPrefs.SetInt("MaxHealth", temp);
+            healthLevelText.text = temp.ToString();
+        }
+    }
+    public void ResetData()
+    {
+        PlayerPrefs.DeleteAll();
+        SceneManager.LoadSceneAsync(1);
+
     }
 }
-    //private int healthIncrement;
-    //private void Awake()
-    //{
-    //    //if (instance != null && instance != this)
-    //    //{
-    //    //    Destroy(gameObject);
-    //    //    Debug.LogError("found more than one MenuManager in the scene");
-    //    //}
-    //    if (instance != null)
-    //    {
-    //        Destroy(gameObject);
-    //        Debug.Log("I found more than one MenuManager in the scene so I am killing myself");
-    //    }
-    //    if(instance == null) 
-    //    {
-    //         instance = this;
-    //    }
-       
-    //    DontDestroyOnLoad(gameObject);
-    //    SceneManager.sceneLoaded += OnSceneLoaded;
-    //}
-
-    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    //{
-    //    Debug.Log("Scene loaded: " + scene.name);
-    //    PlayerHealth.instance.EnhancePlayerMaxHealthBy(healthIncrement);
-    //    //DODELAT WEAPON DMG a ATSP
-    //    if (SceneManager.GetSceneByName("SampleScene") == scene)
-    //    {
-    //      Destroy(gameObject);
-    //    }
-
-    //}
-    //private void OnDestroy()
-    //{
-    //    SceneManager.sceneLoaded -= OnSceneLoaded;
-    //}
