@@ -24,7 +24,7 @@ public class MapGenerator : MonoBehaviour
 
         foreach (Vector3 j in GenerateCoordinates(size))
         {
-            Instantiate(DeterminePiece((int)j.y - 1), new Vector3(j.x * 48.2f, 0, j.z * 48.2f), Quaternion.identity, transform);
+            Instantiate(DeterminePiece((int)j.y - 1), new Vector3(j.x * 50f, 0, j.z * 50f), Quaternion.identity, transform);
         }
         StartCoroutine(BuildNavMesh());
     }

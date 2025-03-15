@@ -1393,10 +1393,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 8
-  spawnPrefab: {fileID: 3507784759645858743, guid: 9a86d0cad788fa649a0e6e113a7a1c5b,
+  spawnPrefab: {fileID: 3507784759645858743, guid: c8672c04eda806a4790af69726483b69,
     type: 3}
   mapPrefabs:
-  - {fileID: 3507784759645858743, guid: 9a86d0cad788fa649a0e6e113a7a1c5b, type: 3}
+  - {fileID: 3507784759645858743, guid: c8672c04eda806a4790af69726483b69, type: 3}
 --- !u!1 &1419471394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1775,7 +1775,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.3, z: 0}
-  m_LocalScale: {x: 8, y: 1, z: 8}
+  m_LocalScale: {x: 5, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
