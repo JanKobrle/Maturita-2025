@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -55,6 +56,11 @@ public class MenuManager : MonoBehaviour
 
     public void Play()
     {
+        StartCoroutine(Load());
+    }
+    IEnumerator Load()
+    {
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadSceneAsync(1);
     }
 
