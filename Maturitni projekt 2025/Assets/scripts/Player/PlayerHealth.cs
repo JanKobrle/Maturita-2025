@@ -6,8 +6,10 @@ using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCou
 
 public class PlayerHealth : MonoBehaviour
 {
-    
+
     [SerializeField] private float maxHealth;
+    [SerializeField] private GameObject deathPanel;
+    [SerializeField] private Animator animator;
     // HEALTHBAR NEBO SRDICKA DODELAT
 
     private float currentHealth;
@@ -26,10 +28,17 @@ public class PlayerHealth : MonoBehaviour
         //healthbar
         if (currentHealth <= 0)
         {
-            SceneManager.LoadScene("MainMenu");
             //animace
             //vypnout vsechno
+            deathPanel.SetActive(true);
+            animator.SetTrigger("IsDead");
+            StartCoroutine(LoadMenu());
         }
     }
 
+    IEnumerator LoadMenu()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("MainMenu");
+    }
 }

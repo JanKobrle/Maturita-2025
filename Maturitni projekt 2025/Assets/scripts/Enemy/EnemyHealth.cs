@@ -7,7 +7,8 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private float maxHealth;
     [SerializeField] private Animator animator;
-    [SerializeField] private GameObject[] components;
+    [SerializeField] private GameObject cone;
+
 
 
     // HEALTHBAR NEBO SRDICKA DODELAT
@@ -26,10 +27,13 @@ public class EnemyHealth : MonoBehaviour
         {
             animator.SetTrigger("IsDead");
 
-            gameObject.GetComponent<EnemyMovement>().enabled = false; 
+            gameObject.GetComponent<EnemyAttack>().StopAttackCoroutine();
+            gameObject.GetComponent<EnemyMovement>().enabled = false;
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             gameObject.GetComponent<CapsuleCollider>().enabled = false;
             gameObject.GetComponent<EnemyHealth>().enabled = false;
+            gameObject.GetComponent<EnemyAttack>().enabled = false;
+            cone.SetActive(false);
 
         }
     }

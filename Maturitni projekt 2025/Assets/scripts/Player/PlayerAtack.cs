@@ -11,6 +11,8 @@ public class PlayerAtack : MonoBehaviour
     [SerializeField] private Color chargedColor;
     [SerializeField] private Color notChargedColor;
     [SerializeField] private PlayerWeapon weapon;
+    [SerializeField] private Animator animator;
+    private PlayerMovement playerMovement;
 
     private bool charged = false;
     private Vector3 tempAttackDir;
@@ -19,6 +21,7 @@ public class PlayerAtack : MonoBehaviour
     void Start()
     {
         weapon = GetComponent<PlayerWeapon>();  //player musi mit weapon, jinak error !!
+        playerMovement = GetComponent<PlayerMovement>();
 
         zoneCircle.transform.parent.gameObject.SetActive(true);
         zoneCircle.fillAmount = weapon.angle * 2f / 360f;
@@ -44,10 +47,14 @@ public class PlayerAtack : MonoBehaviour
         }
         if (Time.time <= nextTimeToAtack) { zoneCircle.color = notChargedColor; } else { zoneCircle.color = chargedColor; }
     }
+
+
     private void Attack(Vector3 attackDir)
     {
-        if (Time.time <= nextTimeToAtack) { return; }
+        if (Time.time <= nextTimeToAtack) { return; }       
         nextTimeToAtack = Time.time + weapon.duration;
+        playerMovement.MovementIntervention(attackDir, 0.24f); //pocka as probehne animace uktoku
+        animator.SetTrigger("Attack");
         List<Transform> toHitTransforms = new List<Transform>();
         Collider[] enemies = Physics.OverlapSphere(transform.position, weapon.range, enemyMask);
 

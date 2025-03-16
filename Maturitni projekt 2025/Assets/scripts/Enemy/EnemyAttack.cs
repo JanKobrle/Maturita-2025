@@ -12,6 +12,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] private float hitLoadTime;
     [SerializeField] private Image zoneCircle;
     [SerializeField] private Image animatedZoneCircle;
+    [SerializeField] private Animator animator;
 
     private bool canAttack = true;
     private bool rotate = true;
@@ -19,6 +20,8 @@ public class EnemyAttack : MonoBehaviour
     private bool animateCone = false;
     private float t = 0f;
     private Vector3 startScale;
+
+    private Coroutine cor = null;
     private void Start()
     {
         zoneCircle.transform.parent.gameObject.SetActive(false);
@@ -51,14 +54,14 @@ public class EnemyAttack : MonoBehaviour
     }
     public void StartAttack(Transform target)
     {
-        
+
         if (canAttack)
         {
             //Debug.Log(" 3  canAttack");
             if (!rotate && Vector3.Angle(target.position - transform.position, transform.forward) < 5f)
             {
                 //Debug.Log(" 4  !rotate && Vector3.Angle(target.position - transform.position, transform.forward) < 5f");
-                StartCoroutine(AttackHit(target));
+                cor = StartCoroutine(AttackHit(target));
             }
             else
             {
@@ -71,7 +74,7 @@ public class EnemyAttack : MonoBehaviour
     }
     private IEnumerator AttackHit(Transform target)
     {
-        //Debug.Log(" 7  IEnumerator AttackHit spusteno");
+        animator.SetTrigger("Attack");
         canAttack = false;
         GetComponent<EnemyMovement>().DisableMovement();
         DrawZoneCone(true);
@@ -87,6 +90,11 @@ public class EnemyAttack : MonoBehaviour
         DrawZoneCone(false);
         GetComponent<EnemyMovement>().EnableMovement();
         canAttack = true;
+    }
+
+    public void StopAttackCoroutine()
+    {
+        StopCoroutine(cor);
     }
     private void DrawZoneCone(bool set)
     {

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -8,8 +9,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotateSpeed;
     [SerializeField] float playerSize;
     [SerializeField] private Joystick movementJoystick;
+    private bool frozen;
+    private Vector3 atackDir;
 
-
+    public void MovementIntervention(Vector3 attackDir, float time)
+    {
+        StartCoroutine(WaitForSeconds(time));
+        atackDir = attackDir;
+    }
+    IEnumerator WaitForSeconds(float seconds)
+    {
+        frozen = true;
+        yield return new WaitForSeconds(seconds);
+        frozen = false;
+    }
     void Update()
     {
         Vector3 moveDir = new Vector3(movementJoystick.Horizontal, 0, movementJoystick.Vertical);   //Joystick input
@@ -34,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (canMove)
             {
-                moveDir = moveDirX/2; //hrac bezi polovicni rychlosti kdyz bezi do zdi
+                moveDir = moveDirX / 2; //hrac bezi polovicni rychlosti kdyz bezi do zdi
             }
             else
             {
@@ -43,19 +56,24 @@ public class PlayerMovement : MonoBehaviour
 
                 if (canMove)
                 {
-                    moveDir = moveDirZ/2; // -||-
+                    moveDir = moveDirZ / 2; // -||-
                 }
             }
         }
 
-        if (canMove) //kdyz v ceste nestoji prekazka, tak se hrac posune
+        if (canMove && !frozen) //kdyz v ceste nestoji prekazka, tak se hrac posune
         {
             Vector3 pos = transform.position;
             transform.position += moveDir * moveDistance;
         }
-
-        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed); //hrac se pohybuje a otaci do smeru chuze.......
-
+        if (!frozen)
+        {
+            transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed); //hrac se pohybuje a otaci do smeru chuze.......
+        }
+        else
+        {
+            transform.forward = Vector3.Slerp(transform.forward, atackDir, Time.deltaTime * 30f);
+        }
         float moveDirAbsoluteValue = Mathf.Abs(moveDir.x) + Mathf.Abs(moveDir.y) + Mathf.Abs(moveDir.z);
         if (moveDirAbsoluteValue != 0)               //kdyz absolutni hodnota vektoru nenolova hraje animace
         {
