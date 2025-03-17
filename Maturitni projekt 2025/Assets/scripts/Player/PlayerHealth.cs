@@ -14,10 +14,11 @@ public class PlayerHealth : MonoBehaviour
     private float currentHealth;
     void Start()
     {
-        var temp = maxHealth;
+        //var temp = maxHealth;
         maxHealth += PlayerPrefs.GetInt("MaxHealth");
-        if (maxHealth < temp) maxHealth = temp;
-
+        Debug.Log(PlayerPrefs.GetInt("MaxHealth"));
+        Debug.Log(maxHealth);
+        //if (maxHealth < temp) maxHealth = temp;
         currentHealth = maxHealth;
     }
 
