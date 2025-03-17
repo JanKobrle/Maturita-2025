@@ -57,7 +57,6 @@ public class EnemyAttack : MonoBehaviour
 
         if (canAttack)
         {
-            //Debug.Log(" 3  canAttack");
             if (!rotate && Vector3.Angle(target.position - transform.position, transform.forward) < 5f)
             {
                 //Debug.Log(" 4  !rotate && Vector3.Angle(target.position - transform.position, transform.forward) < 5f");
