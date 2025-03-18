@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject cone;
     [SerializeField] private GameObject glowingShard;
+    [SerializeField] private GameObject deadBody;
 
     private float currentHealth;
 
@@ -18,29 +19,29 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
 
+        currentHealth -= damage;
+        
         if (currentHealth <= 0) //pri smrti se vypnou vsechny ostatni komponenty na enemy
         {
-            animator.Play("Skeleton@Death01_A", 0, 0f);
             animator.SetTrigger("Death");//nefunguje
-
-            gameObject.GetComponent<EnemyAttack>().StopAttackCoroutine();
-            gameObject.GetComponent<EnemyMovement>().enabled = false;
-            gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            gameObject.GetComponent<CapsuleCollider>().enabled = false;
-            gameObject.GetComponent<EnemyAttack>().enabled = false;
-            cone.SetActive(false);
-            //glowingShard.SetActive(true);
-            GetComponentInChildren<GameObject>(glowingShard);
-            glowingShard.SetActive(true);
+            Instantiate(deadBody, transform.position, Quaternion.identity);            
             StartCoroutine(Death());
         }
 
     }
     private IEnumerator Death()
     {
-        yield return new WaitForSeconds(5f);
+        Instantiate(glowingShard, transform.position, Quaternion.identity);
+
+        yield return new WaitForEndOfFrame();
+        gameObject.GetComponent<EnemyMovement>().enabled = false;
+        gameObject.GetComponent<NavMeshAgent>().enabled = false;
+        gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        gameObject.GetComponent<EnemyAttack>().enabled = false;
+        cone.SetActive(false);
+
         gameObject.GetComponent<EnemyHealth>().enabled = false;
+        Destroy(gameObject);
     }
 }
