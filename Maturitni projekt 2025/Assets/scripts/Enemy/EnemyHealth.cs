@@ -31,6 +31,8 @@ public class EnemyHealth : MonoBehaviour
             gameObject.GetComponent<CapsuleCollider>().enabled = false;
             gameObject.GetComponent<EnemyAttack>().enabled = false;
             cone.SetActive(false);
+            //glowingShard.SetActive(true);
+            GetComponentInChildren<GameObject>(glowingShard);
             glowingShard.SetActive(true);
             StartCoroutine(Death());
         }
