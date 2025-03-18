@@ -206,11 +206,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <probability>k__BackingField:
-  - 20
-  - 20
-  - 20
-  - 20
-  - 20
+  - 0
+  - 1
+  - 2
+  - 0
 --- !u!1 &4686324386826038423
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }   //singleton
 
-    public int shardAmmount = 0;
+    public int shardAmount = 0;
+    [SerializeField] private Canvas PauseCanvas;
 
     private void Awake()
     {
@@ -24,8 +26,22 @@ public class GameManager : MonoBehaviour
 
     public void AddShardsAndSave(int ammount)
     {
-        shardAmmount += ammount;
+        shardAmount += ammount;
     }
 
+    public void PauseMenuPauseClick()
+    {
+        PauseCanvas.gameObject.SetActive(true);
+        Time.timeScale = 0f;
+    }
+    public void PauseMenuContinueClick()
+    {
+        PauseCanvas.gameObject.SetActive(false);
+        Time.timeScale = 1f;
+    }
+    public void PauseMenuQuitClick()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 
 }

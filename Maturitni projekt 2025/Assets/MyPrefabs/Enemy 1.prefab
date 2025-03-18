@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 4522331044813721813}
   - component: {fileID: 3525347314386153550}
   m_Layer: 8
-  m_Name: Enemy
+  m_Name: Enemy 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -463,6 +463,7 @@ MonoBehaviour:
   maxHealth: 10
   animator: {fileID: 1839109640050459410}
   cone: {fileID: 5541003824103757970}
+  glowingShard: {fileID: 0}
 --- !u!195 &4729195265677491331
 NavMeshAgent:
   m_ObjectHideFlags: 0
