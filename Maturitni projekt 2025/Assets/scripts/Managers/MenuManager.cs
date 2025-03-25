@@ -7,12 +7,12 @@ public class MenuManager : MonoBehaviour
 {
     public static MenuManager instance { get; private set; }
 
-    //[SerializeField] DataPersistenceManager DPManager;
     private int shards;
-
-    private int damageLevel;
-    private int healthLevel;
-    //DODELAT pripadne attak speed
+    //[SerializeField] private int shards; na testování
+    private int damage;
+    private int maxHealth;
+    //private int damageLevel;
+    //private int healthLevel;
 
     [SerializeField] private TextMeshProUGUI shardsText;
 
@@ -29,22 +29,27 @@ public class MenuManager : MonoBehaviour
         {
             instance = this;
         }
-
-
     }
 
     private void Start()
     {
         shards = PlayerPrefs.GetInt("ShardAmmount");
 
-        damageLevel = PlayerPrefs.GetInt("DamageLevel");
-        healthLevel = PlayerPrefs.GetInt("HealthLevel");
+        //damageLevel = PlayerPrefs.GetInt("DamageLevel");
+        //healthLevel = PlayerPrefs.GetInt("HealthLevel");
 
         shardsText.text = "Your shards: " + shards.ToString();
 
-        damageLevelText.text = PlayerPrefs.GetInt("DamageLevel").ToString();
-        healthLevelText.text = PlayerPrefs.GetInt("HealthLevel").ToString();
+        // if (PlayerPrefs.GetInt("DamageLevel") <= 0) { PlayerPrefs.SetInt("DamageLevel", 1); } //to aby ten level nemohl b7t 0
+        // if (PlayerPrefs.GetInt("HealthLevel") <= 0) { PlayerPrefs.SetInt("HealthLevel", 1); }
 
+        //damageLevelText.text = PlayerPrefs.GetInt("DamageLevel").ToString();
+        //healthLevelText.text = PlayerPrefs.GetInt("HealthLevel").ToString();
+        damage = PlayerPrefs.GetInt("Damage");
+        damageLevelText.text = damage.ToString();
+
+        maxHealth = PlayerPrefs.GetInt("MaxHealth");
+        healthLevelText.text = maxHealth.ToString();
     }
 
     public void SpendShards(int amount)
@@ -56,17 +61,13 @@ public class MenuManager : MonoBehaviour
 
     public void Play()
     {
-        StartCoroutine(Load());
-    }
-    IEnumerator Load()
-    {
-        yield return new WaitForSeconds(1f);
         SceneManager.LoadSceneAsync(1);
     }
 
+
     public void Quit()
     {
-        Application.Quit(); //ted nefacha, ale as se exportuje, tak by melo
+        Application.Quit(); //funguje as se exportuje
     }
 
     public void EnhanceWeaponDamage()
@@ -74,13 +75,17 @@ public class MenuManager : MonoBehaviour
         if (shards >= 5)
         {
             SpendShards(5);
-            damageLevel++;
-            PlayerPrefs.SetInt("DamageLevel", damageLevel);
+            //damageLevel++;
+            //PlayerPrefs.SetInt("DamageLevel", damageLevel);
+            //damageLevelText.text = damageLevel.ToString();
+            //var temp = PlayerPrefs.GetInt("Damage");
+            //temp++; //muze mit slozitejsi vypocet eventuelne
+            //PlayerPrefs.SetInt("Damage", temp);
+            //damageLevelText.text = temp.ToString();
 
-            var temp = PlayerPrefs.GetInt("Damage");
-            temp++; //muze mit slozitejsi vypocet eventuelne
-            PlayerPrefs.SetInt("Damage", temp);
-            damageLevelText.text = temp.ToString();
+            damage++;
+            PlayerPrefs.SetInt("Damage", damage);
+            damageLevelText.text = damage.ToString();
         }
     }
     public void EnhanceHealth()
@@ -88,19 +93,21 @@ public class MenuManager : MonoBehaviour
         if (shards >= 5)
         {
             SpendShards(5);
-            healthLevel++;
-            PlayerPrefs.SetInt("HealthLevel", healthLevel);
+            //healthLevel++;
+            //PlayerPrefs.SetInt("HealthLevel", healthLevel);
+            //var temp = PlayerPrefs.GetInt("MaxHealth");
+            //temp++; //prida jen jeden, ale mohlo by byt sloziejsi
+            //PlayerPrefs.SetInt("MaxHealth", temp);
+            //healthLevelText.text = temp.ToString();
 
-            var temp = PlayerPrefs.GetInt("MaxHealth");
-            temp++; //just adds one hp
-            PlayerPrefs.SetInt("MaxHealth", temp);
-            healthLevelText.text = temp.ToString();
+            maxHealth++;
+            PlayerPrefs.SetInt("MaxHealth", maxHealth);
+            healthLevelText.text = maxHealth.ToString();
         }
     }
-    public void ResetData()
+    public void ResetDataAndPlay()
     {
         PlayerPrefs.DeleteAll();
         SceneManager.LoadSceneAsync(1);
-
     }
 }

@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dad72a5f940c424f913d19c52912aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 2
   animator: {fileID: 1839109640050459410}
   cone: {fileID: 5541003824103757970}
   glowingShard: {fileID: 1472929685377396725, guid: a58a0ebdbab430641b13704a691594d7,

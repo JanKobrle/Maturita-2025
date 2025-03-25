@@ -20,7 +20,7 @@ public class PlayerAtack : MonoBehaviour
 
     void Start()
     {
-        weapon = GetComponent<PlayerWeapon>();  //player musi mit weapon, jinak error !!
+        weapon = GetComponent<PlayerWeapon>();  //player musi mit weapon, jinak error
         playerMovement = GetComponent<PlayerMovement>();
 
         zoneCircle.transform.parent.gameObject.SetActive(true);

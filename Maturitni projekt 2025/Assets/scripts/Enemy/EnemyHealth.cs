@@ -19,13 +19,12 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-
         currentHealth -= damage;
         
         if (currentHealth <= 0) //pri smrti se vypnou vsechny ostatni komponenty na enemy
         {
-            animator.SetTrigger("Death");//nefunguje
-            Instantiate(deadBody, transform.position, Quaternion.identity);            
+            //animator.SetTrigger("Death");//nefunguje
+            Instantiate(deadBody, transform.position, Quaternion.identity);  //hodi tam prazdnyho enemaka s animaci smrti          
             StartCoroutine(Death());
         }
 

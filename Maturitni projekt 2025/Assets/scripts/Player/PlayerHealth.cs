@@ -28,8 +28,6 @@ public class PlayerHealth : MonoBehaviour
         //healthbar
         if (currentHealth <= 0)
         {
-            //animace
-            //vypnout vsechno
             deathPanel.SetActive(true);
             animator.SetTrigger("IsDead");
             StartCoroutine(LoadMenu());
