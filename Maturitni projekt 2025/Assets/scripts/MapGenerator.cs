@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    public static MapGenerator instance { get; private set; }   //singleton, dá se na to hezky odkazovat, je vždy jen jeden...
+    public static MapGenerator instance { get; private set; }   //[19]
 
     [SerializeField] private int size;
     [SerializeField] private GameObject spawnPrefab;
@@ -38,13 +38,13 @@ public class MapGenerator : MonoBehaviour
     public List<Vector3> GenerateCoordinates(int input) // vygeneruje seznam souødnic v celých èíslech na základì velikosti mapy (poètu chunkù)
     {
         List<Vector3> coordinates = new List<Vector3>();
-
+        //tento výpoèet navrhnul ChatGPT
         for (int i = 1; i <= input; i++) // podle chtìné velikosti mapy zaène v nebližším prstenci generovat souøadnice 
         {
             for (int x = -i; x <= i; x++) // v každém prstenci se zopakuje podle poètu chunkù 
             {
                 int y = i - Mathf.Abs(x);      
-                if (y != 0)               //pro každý chunk vrátí jeho souøadnice
+                if (y != 0)               //pro každý chunk vrátí jeho souøadnice (oba listy mají stejné indexy)
                 {
                     coordinates.Add(new Vector3(x, i, y));
                     coordinates.Add(new Vector3(x, i, -y));
@@ -55,7 +55,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-
+        //zde konèí sekce, ktero mi pomohl navrhnout ChatGPT
         return coordinates;
     }
 
@@ -68,13 +68,13 @@ public class MapGenerator : MonoBehaviour
             else { probList.Add(i.GetComponent<DungeonMapPrefabStats>().probability[distanceFromSpawn]); } // pøidá hodnotu, do seznamu
         }
 
-        List<float> cumulativeProb = new List<float> { probList[0] }; //seznam pravdìpodobnostních indexù
+        List<float> cumulativeProb = new List<float> { probList[0] }; //seznam kumulativních pravdìpodobností
         for (int i = 1; i < probList.Count; i++)
         {
             cumulativeProb.Add(cumulativeProb[i - 1] + probList[i]); // vytvoøí seznam, kdy každá další pozice se rovná souètu s bezprostøednì pøedchozí pozicí 1,2,3,4... 1,3,6,10...
         }
         float totalSum = cumulativeProb.Last(); // celkový souèet, resp poslední pozice
-        float randomValue = Random.Range(0f, totalSum); // vybere náhodnou hodnotu mezi 0 a max
+        float randomValue = Random.Range(0f, totalSum); // vybere náhodnou hodnotu mezi 0 a celkovým souètem
         for (int i = 0; i < cumulativeProb.Count; i++) // postupnì porovná náhodnou hodnotu s hodnotami v cumulativeProb[i] dokud nenajde odpovídající index
         {
             if (randomValue < cumulativeProb[i])
@@ -83,8 +83,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        return mapPrefabs.Last();   //kdyz maj vsechny roomky 0 prop tak to tam hodi tu posledni, aby to kdyžtak vyšlo
-        //return spawnPrefab;   //pro testovani
+        return mapPrefabs.Last();   //kdyz maj vsechny pref. 0 prob. tak to tam posle tu posledni, aby to kdyžtak vyšlo
 
     }
 }

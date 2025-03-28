@@ -9,7 +9,6 @@ public class DungeonEscape : MonoBehaviour
     {
         if (collision.collider.gameObject.CompareTag("Player"))
         {
-
             PlayerPrefs.SetInt("ShardAmmount", PlayerPrefs.GetInt("ShardAmmount") + GameManager.instance.shardAmount);
             SceneManager.LoadScene("MainMenu");
         }

@@ -1649,7 +1649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d4a26a767da39742b11e0938d9b9562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <damage>k__BackingField: 5
+  <damage>k__BackingField: 1
   <range>k__BackingField: 2.5
   <angle>k__BackingField: 45
   <duration>k__BackingField: 1
@@ -1709,10 +1709,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.5321436
+  m_Height: 2.6513445
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.56766117, z: 0.032143593}
 --- !u!1 &5442915912859234693
 GameObject:
   m_ObjectHideFlags: 0

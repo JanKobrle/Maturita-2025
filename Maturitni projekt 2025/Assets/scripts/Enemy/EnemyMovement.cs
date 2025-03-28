@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Animations;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private float attackRange;
@@ -27,7 +26,6 @@ public class EnemyMovement : MonoBehaviour
         if (canMove) HandleMovement();
     }
 
-
     public void DisableMovement()
     {
         canMove = false;
@@ -41,26 +39,25 @@ public class EnemyMovement : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, playerTransform.position) <= attackRange)
         {
-            agent.destination = transform.position;
+            agent.destination = transform.position; //[18]
             enemyAttack.StartAttack(playerTransform);
-            animator.SetBool("IsRunning", false); 
+            animator.SetBool("IsRunning", false);
 
         }
         else if (Vector3.Distance(transform.position, playerTransform.position) <= playerSpotRange)
         {
             enemyAttack.CancelRotate();
-            agent.destination = playerTransform.position;
+            agent.destination = playerTransform.position; //[18]
             animator.SetBool("IsRunning", true);
         }
         else
         {
-            agent.destination = transform.position;
+            agent.destination = transform.position; //[18]
             animator.SetBool("IsRunning", false);
         }
 
-            
     }
-        
+    //vykreslí do editoru zóny
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;

@@ -1180,7 +1180,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -80.90613}
+  m_AnchoredPosition: {x: 0, y: -80.906006}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &859872028
@@ -1794,6 +1794,7 @@ MonoBehaviour:
   - {fileID: 3507784759645858743, guid: 58fdd101c5eaf7e47a9dca95d925e72e, type: 3}
   - {fileID: 3507784759645858743, guid: 64e4ee34d7e3fd7459c97bb1d1e8a468, type: 3}
   - {fileID: 3507784759645858743, guid: 1e2ddcd058c3638449fec8ec61f7a94b, type: 3}
+  - {fileID: 3507784759645858743, guid: 49a6772f7dd3c3842a221fdea2d1dd25, type: 3}
 --- !u!1 &1419471394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,7 +1831,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -960, y: -1.0001221}
+  m_AnchoredPosition: {x: -960, y: -1.0002441}
   m_SizeDelta: {x: 960, y: 645}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1419471396
@@ -2732,26 +2733,6 @@ PrefabInstance:
       propertyPath: attackJoystick
       value: 
       objectReference: {fileID: 1419471396}
-    - target: {fileID: 1920848729797036403, guid: 1e531ac84fed7a24a9aabd0674a84d36,
-        type: 3}
-      propertyPath: m_Height
-      value: 2.6513445
-      objectReference: {fileID: 0}
-    - target: {fileID: 1920848729797036403, guid: 1e531ac84fed7a24a9aabd0674a84d36,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.5321436
-      objectReference: {fileID: 0}
-    - target: {fileID: 1920848729797036403, guid: 1e531ac84fed7a24a9aabd0674a84d36,
-        type: 3}
-      propertyPath: m_Center.y
-      value: 0.56766117
-      objectReference: {fileID: 0}
-    - target: {fileID: 1920848729797036403, guid: 1e531ac84fed7a24a9aabd0674a84d36,
-        type: 3}
-      propertyPath: m_Center.z
-      value: 0.032143593
-      objectReference: {fileID: 0}
     - target: {fileID: 3915964214241998379, guid: 1e531ac84fed7a24a9aabd0674a84d36,
         type: 3}
       propertyPath: hpText
@@ -2769,8 +2750,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8641931240561364056, guid: 1e531ac84fed7a24a9aabd0674a84d36,
         type: 3}
+      propertyPath: <angle>k__BackingField
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641931240561364056, guid: 1e531ac84fed7a24a9aabd0674a84d36,
+        type: 3}
       propertyPath: <range>k__BackingField
-      value: 2.5
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641931240561364056, guid: 1e531ac84fed7a24a9aabd0674a84d36,
+        type: 3}
+      propertyPath: <duration>k__BackingField
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107070141073322040, guid: 1e531ac84fed7a24a9aabd0674a84d36,
+        type: 3}
+      propertyPath: movementSpeed
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 9107070141073322040, guid: 1e531ac84fed7a24a9aabd0674a84d36,
         type: 3}

@@ -10,7 +10,6 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float maxHealth;
     [SerializeField] private GameObject deathPanel;
     [SerializeField] private Animator animator;
-    // HEALTHBAR NEBO SRDICKA DODELAT
     [SerializeField] TextMeshProUGUI hpText;
 
     private float currentHealth;
@@ -25,7 +24,6 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth -= damage;
         hpText.text = "Hp: " + currentHealth.ToString();
-        //healthbar
         if (currentHealth <= 0)
         {
             deathPanel.SetActive(true);
@@ -34,9 +32,9 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    IEnumerator LoadMenu()
+    IEnumerator LoadMenu() //[20]
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f); //èeká, až se pøehraje "you died"
         SceneManager.LoadScene("MainMenu");
     }
 }

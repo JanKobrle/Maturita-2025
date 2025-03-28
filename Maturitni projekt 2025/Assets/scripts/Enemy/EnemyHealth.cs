@@ -21,25 +21,24 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= damage;
         
-        if (currentHealth <= 0) //pri smrti se vypnou vsechny ostatni komponenty na enemy
+        if (currentHealth <= 0) 
         {
-            //animator.SetTrigger("Death");//nefunguje
-            Instantiate(deadBody, transform.position, Quaternion.identity);  //hodi tam prazdnyho enemaka s animaci smrti          
+            Instantiate(deadBody, transform.position, Quaternion.identity);  //vytvoøí prázdného nepøítele         
             StartCoroutine(Death());
         }
 
     }
-    private IEnumerator Death()
+    private IEnumerator Death() //poèká na konec snímku
     {
-        Instantiate(glowingShard, transform.position, Quaternion.identity);
+        Instantiate(glowingShard, transform.position, Quaternion.identity); //udìlá shard
 
         yield return new WaitForEndOfFrame();
+
+        cone.SetActive(false);                                      //vypíná se tu pro jistotu všechno
         gameObject.GetComponent<EnemyMovement>().enabled = false;
         gameObject.GetComponent<NavMeshAgent>().enabled = false;
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
         gameObject.GetComponent<EnemyAttack>().enabled = false;
-        cone.SetActive(false);
-
         gameObject.GetComponent<EnemyHealth>().enabled = false;
         Destroy(gameObject);
     }

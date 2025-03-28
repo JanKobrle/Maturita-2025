@@ -20,10 +20,11 @@ public class PlayerAtack : MonoBehaviour
 
     void Start()
     {
-        weapon = GetComponent<PlayerWeapon>();  //player musi mit weapon, jinak error
+        weapon = GetComponent<PlayerWeapon>();  
         playerMovement = GetComponent<PlayerMovement>();
 
-        zoneCircle.transform.parent.gameObject.SetActive(true);
+        //udìlá koleèko pod hráèem, ze kterého se pak vybere výseè na útok
+        zoneCircle.transform.parent.gameObject.SetActive(true); 
         zoneCircle.fillAmount = weapon.angle * 2f / 360f;
         zoneCircle.rectTransform.localScale *= weapon.range * 2;
         zoneCircle.transform.parent.gameObject.SetActive(false);
@@ -33,13 +34,13 @@ public class PlayerAtack : MonoBehaviour
     {
         Vector3 attackDir = new Vector3(attackJoystick.Horizontal, 0, attackJoystick.Vertical).normalized;   //Joystick input
 
-        if (attackDir != Vector3.zero)      //kdyz se dotkne js
+        if (attackDir != Vector3.zero)      //kdyz se dotkne joysticku
         {
             charged = true;
             tempAttackDir = attackDir;
             DrawZoneCone(true);
         }
-        if (charged && attackDir == Vector3.zero)           //kdyz pusti js
+        if (charged && attackDir == Vector3.zero)           //kdyz pusti joystick
         {
             DrawZoneCone(false);
             Attack(tempAttackDir);
@@ -47,18 +48,21 @@ public class PlayerAtack : MonoBehaviour
         }
         if (Time.time <= nextTimeToAtack) { zoneCircle.color = notChargedColor; } else { zoneCircle.color = chargedColor; }
     }
-
+     
 
     private void Attack(Vector3 attackDir)
     {
         if (Time.time <= nextTimeToAtack) { return; }       
-        nextTimeToAtack = Time.time + weapon.duration;
-        playerMovement.MovementIntervention(attackDir, 0.24f); //pocka as probehne animace uktoku
-        animator.SetTrigger("Attack");
-        List<Transform> toHitTransforms = new List<Transform>();
-        Collider[] enemies = Physics.OverlapSphere(transform.position, weapon.range, enemyMask);
+        nextTimeToAtack = Time.time + weapon.duration; 
 
-        foreach (Collider e in enemies)
+        playerMovement.MovementIntervention(attackDir, 0.24f); //poèká aš probìhne animace úktoku
+
+        animator.SetTrigger("Attack");  
+
+        List<Transform> toHitTransforms = new List<Transform>();
+        Collider[] enemies = Physics.OverlapSphere(transform.position, weapon.range, enemyMask); // najde všechny v dosahu
+
+        foreach (Collider e in enemies) //zkontroluje, zda jsou ve výseèi
         {
 
             if (Vector3.Angle(attackDir, e.transform.position - transform.position) <= weapon.angle)
@@ -66,29 +70,27 @@ public class PlayerAtack : MonoBehaviour
                 toHitTransforms.Add(e.transform);
             }
         }
-
-        foreach (Transform t in toHitTransforms)
+        foreach (Transform t in toHitTransforms) // ubere životy všem zasaženým
         {
             t.GetComponent<EnemyHealth>().TakeDamage(weapon.damage);
         }
     }
-    private void DrawZoneCone(bool set)
+    private void DrawZoneCone(bool set) //nakreslí kde všude útok zasáhne
     {
         if (set)
         {
             zoneCircle.transform.parent.gameObject.SetActive(true);
+            //následující jeden øádek byl napsán s pomocí ChatGPT
             zoneCircle.rectTransform.eulerAngles = new Vector3(90, 0, Mathf.Atan2(attackJoystick.Vertical, attackJoystick.Horizontal) / Mathf.PI * 180f - weapon.angle);
-
         }
         else
         {
             zoneCircle.rectTransform.eulerAngles = Vector3.zero;
             zoneCircle.transform.parent.gameObject.SetActive(false);
-
         }
     }
 
-    //naktersli atackrange
+    //nakterslí atackrange v editoru
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

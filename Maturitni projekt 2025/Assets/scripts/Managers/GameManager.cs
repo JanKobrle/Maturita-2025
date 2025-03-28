@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance { get; private set; }   //singleton
+    public static GameManager instance { get; private set; }   //[19]
 
     public int shardAmount = 0;
     [SerializeField] private Canvas PauseCanvas;
