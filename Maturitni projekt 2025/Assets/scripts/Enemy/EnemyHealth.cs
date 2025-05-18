@@ -2,44 +2,47 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyHealth : MonoBehaviour
+namespace OD.Dungeon
 {
-    [SerializeField] private float maxHealth;
-    [SerializeField] private Animator animator;
-    [SerializeField] private GameObject cone;
-    [SerializeField] private GameObject glowingShard;
-    [SerializeField] private GameObject deadBody;
-
-    private float currentHealth;
-
-    void Start()
+    public class EnemyHealth : MonoBehaviour
     {
-        currentHealth = maxHealth;
-    }
+        [SerializeField] private float maxHealth;
+        [SerializeField] private Animator animator;
+        [SerializeField] private GameObject cone;
+        [SerializeField] private GameObject glowingShard;
+        [SerializeField] private GameObject deadBody;
 
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
-        
-        if (currentHealth <= 0) 
+        private float currentHealth;
+
+        void Start()
         {
-            Instantiate(deadBody, transform.position, Quaternion.identity);  //vytvoøí prázdného nepøítele         
-            StartCoroutine(Death());
+            currentHealth = maxHealth;
         }
 
-    }
-    private IEnumerator Death() //poèká na konec snímku
-    {
-        Instantiate(glowingShard, transform.position, Quaternion.identity); //udìlá shard
+        public void TakeDamage(float damage)
+        {
+            currentHealth -= damage;
 
-        yield return new WaitForEndOfFrame();
+            if (currentHealth <= 0)
+            {
+                Instantiate(deadBody, transform.position, Quaternion.identity);      //vytvoøí prázdného nepøítele         
+                StartCoroutine(Death());
+            }
 
-        cone.SetActive(false);                                      //vypíná se tu pro jistotu všechno
-        gameObject.GetComponent<EnemyMovement>().enabled = false;
-        gameObject.GetComponent<NavMeshAgent>().enabled = false;
-        gameObject.GetComponent<CapsuleCollider>().enabled = false;
-        gameObject.GetComponent<EnemyAttack>().enabled = false;
-        gameObject.GetComponent<EnemyHealth>().enabled = false;
-        Destroy(gameObject);
+        }
+        private IEnumerator Death()    //poèká na konec snímku
+        {
+            Instantiate(glowingShard, transform.position, Quaternion.identity);        //udìlá shard
+
+            yield return new WaitForEndOfFrame();
+
+            cone.SetActive(false);                                     //vypíná se tu pro jistotu všechno
+            gameObject.GetComponent<EnemyMovement>().enabled = false;
+            gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            gameObject.GetComponent<EnemyAttack>().enabled = false;
+            gameObject.GetComponent<EnemyHealth>().enabled = false;
+            Destroy(gameObject);
+        }
     }
 }

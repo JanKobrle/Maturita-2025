@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class PlayerWeapon : MonoBehaviour
+namespace OD.Player
 {
-    [field: SerializeField] public float damage { get; private set; }
-    [field: SerializeField] public float range { get; private set; }
-    [field: SerializeField] public float angle { get; private set; }
-    [field: SerializeField] public float duration { get; private set; } //musí ladit s animací
-    private void Start()
+    public class PlayerWeapon : MonoBehaviour
     {
-        damage += PlayerPrefs.GetInt("Damage");
+        [field: SerializeField] public float damage { get; private set; }
+        [field: SerializeField] public float range { get; private set; }
+        [field: SerializeField] public float angle { get; private set; }
+        [field: SerializeField] public float duration { get; private set; } //musí ladit s animací
+        private void Start()
+        {
+            damage += PlayerPrefs.GetInt("Damage");
+        }
     }
 }

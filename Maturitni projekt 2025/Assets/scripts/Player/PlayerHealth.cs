@@ -1,40 +1,42 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerHealth : MonoBehaviour
+namespace OD.Player
 {
-
-    [SerializeField] private float maxHealth;
-    [SerializeField] private GameObject deathPanel;
-    [SerializeField] private Animator animator;
-    [SerializeField] TextMeshProUGUI hpText;
-
-    private float currentHealth;
-    void Start()
+    public class PlayerHealth : MonoBehaviour
     {
-        maxHealth += PlayerPrefs.GetInt("MaxHealth");
-        currentHealth = maxHealth;
-        hpText.text = "Hp: " + currentHealth;
-    }
 
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
-        hpText.text = "Hp: " + currentHealth.ToString();
-        if (currentHealth <= 0)
+        [SerializeField] private float maxHealth;
+        [SerializeField] private GameObject deathPanel;
+        [SerializeField] private Animator animator;
+        [SerializeField] TextMeshProUGUI hpText;
+
+        private float currentHealth;
+        void Start()
         {
-            deathPanel.SetActive(true);
-            animator.SetTrigger("IsDead");
-            StartCoroutine(LoadMenu());
+            maxHealth += PlayerPrefs.GetInt("MaxHealth");
+            currentHealth = maxHealth;
+            hpText.text = "Hp: " + currentHealth;
         }
-    }
 
-    IEnumerator LoadMenu() //[20]
-    {
-        yield return new WaitForSeconds(2f); //èeká, až se pøehraje "you died"
-        SceneManager.LoadScene("MainMenu");
+        public void TakeDamage(float damage)
+        {
+            currentHealth -= damage;
+            hpText.text = "Hp: " + currentHealth.ToString();
+            if (currentHealth <= 0)
+            {
+                deathPanel.SetActive(true);
+                animator.SetTrigger("IsDead");
+                StartCoroutine(LoadMenu());
+            }
+        }
+
+        IEnumerator LoadMenu() //[20]
+        {
+            yield return new WaitForSeconds(2f); //èeká, až se pøehraje "you died"
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 }

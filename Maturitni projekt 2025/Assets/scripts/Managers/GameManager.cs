@@ -1,48 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+
+namespace OD.Manager
 {
-    public static GameManager instance { get; private set; }   //[19]
 
-    public int shardAmount = 0;
-    [SerializeField] private Canvas PauseCanvas;
 
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (instance != null && instance != this)
+        public static GameManager instance { get; private set; }   //[19]
+
+        public int shardAmount = 0;
+        [SerializeField] private Canvas PauseCanvas;
+
+        private void Awake()
         {
-            Debug.Log("found more than one GameManager in the scene");
-            Destroy(gameObject);
+            if (instance != null && instance != this)
+            {
+                Debug.Log("found more than one GameManager in the scene");
+                Destroy(gameObject);
+            }
+            else
+            {
+                instance = this;
+            }
+
         }
-        else
+
+        public void AddShardsAndSave(int ammount)
         {
-          instance = this;
+            shardAmount += ammount;
         }
 
-    }
+        public void PauseMenuPauseClick()
+        {
+            PauseCanvas.gameObject.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        public void PauseMenuContinueClick()
+        {
+            PauseCanvas.gameObject.SetActive(false);
+            Time.timeScale = 1f;
+        }
+        public void PauseMenuQuitClick()
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("MainMenu");
+        }
 
-    public void AddShardsAndSave(int ammount)
-    {
-        shardAmount += ammount;
-    }
-
-    public void PauseMenuPauseClick()
-    {
-        PauseCanvas.gameObject.SetActive(true);
-        Time.timeScale = 0f;
-    }
-    public void PauseMenuContinueClick()
-    {
-        PauseCanvas.gameObject.SetActive(false);
-        Time.timeScale = 1f;
-    }
-    public void PauseMenuQuitClick()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
     }
 
 }
